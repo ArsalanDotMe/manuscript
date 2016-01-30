@@ -1,6 +1,6 @@
 {
   "name": "manuscript",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A utility to generate documents that describe your API and can be implemented by web frameworks in any language.",
   "main": "lib/index.js",
   "scripts": {
