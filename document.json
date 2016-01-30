@@ -1,0 +1,103 @@
+{
+  "config": {
+    "static": {
+      "name": "My Awesome TODOS API",
+      "version": "0.1.0"
+    },
+    "dynamic": {
+      "default": {
+        "host": "localhost",
+        "port": 8057,
+        "db": {
+          "api": {
+            "host": "localhost",
+            "user": "arsalanahmad",
+            "password": "",
+            "database": "manuscript",
+            "port": 5432
+          }
+        }
+      },
+      "development": {},
+      "test": {},
+      "production": {}
+    }
+  },
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/todos",
+      "description": "Creates a new todo",
+      "operations": [
+        {
+          "type": "db",
+          "config": {
+            "method": "insert",
+            "table": "todos",
+            "database": "api",
+            "columns": [
+              { "column": "title", "value": "$request.body.title" },
+              { "column": "done", "value": "$request.body.done", "default": true }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/todos",
+      "description": "Gets todos from the list",
+      "operations": [
+        {
+          "type": "db",
+          "config": {
+            "method": "select",
+            "table": "todos",
+            "database": "api"
+          }
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/todos/{todoId}/toggle",
+      "description": "Toggles the done state of the todo",
+      "operations": [
+        {
+          "type": "db",
+          "config": {
+            "method": "update",
+            "table": "todos",
+            "database": "api",
+            "where": {
+              "query": "id = ?",
+              "params": [ "$request.params.todoId" ]
+            },
+            "columns": [
+              { "column": "done", "value": "NOT done", "raw": true }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/todos/{todoId}",
+      "description": "Deletes a todo",
+      "operations": [
+        {
+          "type": "db",
+          "config": {
+            "method": "delete",
+            "table": "todos",
+            "database": "api",
+            "where": {
+              "query": "id = ?",
+              "params": [ "$request.params.todoId" ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
