@@ -2,7 +2,7 @@
   "config": {
     "static": {
       "name": "My Awesome API",
-      "version": "0.0.0"
+      "version": "0.1.0"
     },
     "dynamic": {
       "default": {
@@ -26,56 +26,76 @@
   "routes": [
     {
       "method": "POST",
-      "path": "/campaigns",
-      "description": "Creates a new campaign",
+      "path": "/todos",
+      "description": "Creates a new todo",
       "operations": [
         {
-          "key": "i1",
-          "type": "insert",
+          "type": "db",
           "config": {
-            "table": "campaigns",
+            "method": "insert",
+            "table": "todos",
             "database": "api",
             "columns": [
               { "column": "title", "value": "$request.body.title" },
-              { "column": "description", "value": "$request.body.description" },
-              { "column": "required_views", "value": "$request.body.requiredViews" },
-              { "column": "required_reach", "value": "$request.body.requiredReach" },
-              { 
-                "column": "created_at",
-                "value": "$util.dateTime.now.ISOString"
-              },
-              { 
-                "column": "updated_at",
-                "value": "$util.dateTime.now.ISOString"
-              },
-              { "column": "private", "value": true }
+              { "column": "done", "value": "$request.body.done" }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/todos",
+      "description": "Gets todos from the list",
+      "operations": [
+        {
+          "type": "db",
+          "config": {
+            "method": "select",
+            "table": "todos",
+            "database": "api",
+          }
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/todos/{todoId}/toggle",
+      "description": "Toggles the done state of the todo",
+      "operations": [
+        {
+          "type": "db",
+          "config": {
+            "method": "update",
+            "table": "todos",
+            "database": "api",
+            "where": {
+              "query": "id = ?",
+              "params": [ "$request.params.todoId" ]
+            },
+            "update": {
+              "query": "done = !done",
+            }
+          }
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/todos",
+      "description": "Deletes a todo",
+      "operations": [
+        {
+          "type": "db",
+          "config": {
+            "method": "delete",
+            "table": "todos",
+            "database": "api",
+            "where": [
+              { "column": "id", "value": "$request.params.todoId" }
             ]
           }
         },
-        {
-          "key": "final",
-          "dependencies": ["i1"],
-          "type": "transform",
-          "config": {
-            "method": "map",
-            "mapTransform": {
-              "id": "$t1.id",
-              "title": "$t1.title",
-              "description": "$t1.description",
-              "requiredViews": "$t1.required_views",
-              "requiredReach": "$t1.required_reach"
-            }
-          }
-        },
-        {
-          "dependencies": ["final"],
-          "type": "transform",
-          "config": {
-            "method": "pick-child-at",
-            "index": 0,
-            "array": "$final"
-          }
-        }
       ]
     }
   ]
