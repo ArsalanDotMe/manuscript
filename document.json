@@ -1,0 +1,82 @@
+{
+  "config": {
+    "static": {
+      "name": "My Awesome API",
+      "version": "0.0.0"
+    },
+    "dynamic": {
+      "default": {
+        "host": "localhost",
+        "port": 8057,
+        "db": {
+          "api": {
+            "host": "localhost",
+            "user": "arsalanahmad",
+            "password": "",
+            "database": "manuscript",
+            "port": 5432
+          }
+        }
+      },
+      "development": {},
+      "test": {},
+      "production": {}
+    }
+  },
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/campaigns",
+      "description": "Creates a new campaign",
+      "operations": [
+        {
+          "key": "i1",
+          "type": "insert",
+          "config": {
+            "table": "campaigns",
+            "database": "api",
+            "columns": [
+              { "column": "title", "value": "$request.body.title" },
+              { "column": "description", "value": "$request.body.description" },
+              { "column": "required_views", "value": "$request.body.requiredViews" },
+              { "column": "required_reach", "value": "$request.body.requiredReach" },
+              { 
+                "column": "created_at",
+                "value": "$util.dateTime.now.ISOString"
+              },
+              { 
+                "column": "updated_at",
+                "value": "$util.dateTime.now.ISOString"
+              },
+              { "column": "private", "value": true }
+            ]
+          }
+        },
+        {
+          "key": "final",
+          "dependencies": ["i1"],
+          "type": "transform",
+          "config": {
+            "method": "map",
+            "mapTransform": {
+              "id": "$t1.id",
+              "title": "$t1.title",
+              "description": "$t1.description",
+              "requiredViews": "$t1.required_views",
+              "requiredReach": "$t1.required_reach"
+            }
+          }
+        },
+        {
+          "dependencies": ["final"],
+          "type": "transform",
+          "config": {
+            "method": "pick-child-at",
+            "index": 0,
+            "array": "$final"
+          }
+        }
+      ]
+    }
+  ]
+}

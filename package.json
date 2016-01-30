@@ -1,0 +1,30 @@
+{
+  "name": "manuscript",
+  "version": "0.0.1",
+  "description": "A utility to generate documents that describe your API and can be implemented by web frameworks in any language.",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "node lib/index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArsalanDotMe/manuscript.git"
+  },
+  "author": "Arsalan Ahmad <contact@arsalan.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ArsalanDotMe/manuscript/issues"
+  },
+  "homepage": "https://github.com/ArsalanDotMe/manuscript#readme",
+  "devDependencies": {
+    "eslint": "^1.10.3"
+  },
+  "dependencies": {
+    "bluebird": "^3.1.5",
+    "hapi": "^12.1.0",
+    "knex": "^0.9.0",
+    "lodash": "^4.1.0",
+    "pg": "^4.4.4"
+  }
+}
