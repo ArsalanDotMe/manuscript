@@ -36,8 +36,18 @@
             "table": "todos",
             "database": "api",
             "columns": [
-              { "column": "title", "value": "$request.body.title" },
-              { "column": "done", "value": "$request.body.done", "default": true }
+              { "column": "title",
+                "value": {
+                  "path": "request.body.title"
+                }
+              },
+              {
+                "column": "done",
+                "value": {
+                  "path": "request.body.done",
+                  "default": true
+                }
+              }
             ]
           }
         }
@@ -71,7 +81,7 @@
             "database": "api",
             "where": {
               "query": "id = ?",
-              "params": [ "$request.params.todoId" ]
+              "params": [ { "path": "request.params.todoId" } ]
             },
             "columns": [
               { "column": "done", "value": "NOT done", "raw": true }
@@ -93,7 +103,7 @@
             "database": "api",
             "where": {
               "query": "id = ?",
-              "params": [ "$request.params.todoId" ]
+              "params": [ { "path": "request.params.todoId" } ]
             }
           }
         }

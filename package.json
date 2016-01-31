@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/ArsalanDotMe/manuscript#readme",
   "devDependencies": {
-    "eslint": "^1.10.3"
+    "code": "^2.1.0",
+    "eslint": "^1.10.3",
+    "joi": "^7.2.3",
+    "lab": "^8.2.0"
   },
   "dependencies": {
     "bluebird": "^3.1.5",
