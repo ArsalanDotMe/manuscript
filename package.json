@@ -1,6 +1,6 @@
 {
   "name": "manuscript",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A utility to generate documents that describe your API and can be implemented by web frameworks in any language.",
   "main": "lib/index.js",
   "scripts": {
@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/ArsalanDotMe/manuscript#readme",
   "devDependencies": {
-    "eslint": "^1.10.3"
+    "code": "^2.1.0",
+    "eslint": "^1.10.3",
+    "joi": "^7.2.3",
+    "lab": "^8.2.0"
   },
   "dependencies": {
     "bluebird": "^3.1.5",
